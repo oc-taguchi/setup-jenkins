@@ -1,9 +1,12 @@
 services:
   jenkins-al2023:
-    image: amazonlinux:2023
+    build: .
+    image: jenkins-al2023:latest
     container_name: jenkins-al2023
     tty: true
     stdin_open: true
+    ports:
+      - "8080:80"
     volumes:
-      - ./dotfiles:/workspace/dotfiles
-    working_dir: /workspace/dotfiles
+      - ./scripts:/workspace/scripts
+    working_dir: /workspace/scripts
