@@ -1,4 +1,4 @@
-{ config, user, pkgs, ... }:
+{ config, user, pkgs, lib, ... }:
 
 let
   dotfilesDir = ../dotfiles;
@@ -33,6 +33,13 @@ in {
   };
 
   programs.home-manager.enable = true;
+
+  home.activation.unprivilegedPorts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ "$(sysctl -n net.ipv4.ip_unprivileged_port_start)" -gt 80 ]; then
+      echo "net.ipv4.ip_unprivileged_port_start = 80" | sudo tee /etc/sysctl.d/99-unprivileged-ports.conf > /dev/null
+      sudo sysctl --system > /dev/null
+    fi
+  '';
 
   programs.bash = {
     enable = true;
