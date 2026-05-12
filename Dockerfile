@@ -4,7 +4,7 @@ ARG HOME_DIR="/root"
 
 # nixのインストールに必要な shadow-utils をインストール
 # groupadd コマンドが必要なため
-RUN dnf upgrade && dnf install -y shadow-utils
+RUN dnf upgrade && dnf install -y shadow-utils cloud-init
 
 # root で nix をインストール（trusted-users に一般ユーザーを追加）
 RUN curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install linux \
