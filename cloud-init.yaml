@@ -2,3 +2,18 @@
 
 timezone: Asia/Tokyo
 locale: ja_JP.utf8
+
+disk_setup:
+  /dev/xvdb:
+    table_type: gpt
+    layout: true
+    overwrite: false
+
+fs_setup:
+  - label: jenkins
+    filesystem: xfs
+    device: /dev/xvdb1
+    overwrite: false
+
+mounts:
+  - [/dev/xvdb1, /mnt/jenkins, xfs, "defaults,nofail", "0", "2"]
