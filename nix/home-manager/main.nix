@@ -25,7 +25,7 @@ in {
 
     corretto25
     jenkins
-    nginx
+    caddy
   ];
 
   home.sessionVariables = {
@@ -39,13 +39,13 @@ in {
     enableCompletion = true;
   };
 
-  systemd.user.services.nginx = {
+  systemd.user.services.caddy = {
     Unit = {
-      Description = "nginx reverse proxy for Jenkins";
+      Description = "Caddy reverse proxy for Jenkins";
       After = [ "jenkins.service" ];
     };
     Service = {
-      ExecStart = "${pkgs.nginx}/bin/nginx -c ${config.home.homeDirectory}/.config/nginx/nginx.conf -g 'daemon off;'";
+      ExecStart = "${pkgs.caddy}/bin/caddy run --config ${config.home.homeDirectory}/.config/caddy/Caddyfile";
       Restart = "always";
     };
     Install = {
