@@ -9,7 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # 実行ユーザーの取得
 USER="${SUDO_USER:-$(whoami)}"
 DOTFILES_DIR="${SCRIPT_DIR}/dotfiles"
-NIX_DIR="${SCRIPT_DIR}/nix"
+NIX_DIR="$(cd "${SCRIPT_DIR}/../nix" && pwd)"
 
 # 引数のパース
 while [[ $# -gt 0 ]]; do

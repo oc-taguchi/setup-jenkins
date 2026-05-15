@@ -8,5 +8,6 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./scripts:/workspace/scripts
-    working_dir: /workspace/scripts
+      - ./nix:/workspace/setup-jenkins/nix
+      - ./scripts:/workspace/setup-jenkins/scripts
+    working_dir: /workspace/setup-jenkins

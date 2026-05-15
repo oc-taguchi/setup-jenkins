@@ -1,0 +1,29 @@
+#cloud-config
+
+timezone: Asia/Tokyo
+locale: ja_JP.utf8
+
+disk_setup:
+  /dev/xvdb:
+    table_type: gpt
+    layout: true
+    overwrite: false
+
+fs_setup:
+  - label: jenkins
+    filesystem: xfs
+    device: /dev/xvdb1
+    overwrite: false
+
+write_files:
+  - path: /etc/sysctl.d/99-unprivileged-ports.conf
+    content: |
+      net.ipv4.ip_unprivileged_port_start = 80
+    owner: root:root
+    permissions: "0644"
+
+mounts:
+  - [/dev/xvdb1, /mnt/jenkins, xfs, "defaults,nofail", "0", "2"]
+
+runcmd:
+  - sysctl --system

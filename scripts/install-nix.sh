@@ -8,8 +8,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # 実行ユーザーの取得
 USER="${SUDO_USER:-$(whoami)}"
-DOTFILES_DIR="${SCRIPT_DIR}/dotfiles"
-NIX_DIR="${SCRIPT_DIR}/nix"
 
 # 引数のパース
 while [[ $# -gt 0 ]]; do
@@ -29,8 +27,6 @@ fi
 
 # 変数の表示
 log_debug "SCRIPT_DIR: ${SCRIPT_DIR}"
-log_debug "DOTFILES_DIR: ${DOTFILES_DIR}"
-log_debug "NIX_DIR: ${NIX_DIR}"
 log_debug "USER: ${USER}"
 
 # nix のインストール確認
