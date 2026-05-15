@@ -28,9 +28,16 @@ write_files:
     owner: root:root
     permissions: "0644"
 
-mounts:
-  - [/dev/nvme1n1p1, /nix, xfs, "defaults,nofail", "0", "2"]
-  - [/dev/nvme1n1p2, /mnt/jenkins, xfs, "defaults,nofail", "0", "2"]
-
 runcmd:
+  # ディスクまわりの処理待ち
+  - udevadm settle
+  # マウント先のディレクトリ（マウントポイント）を確実に作成
+  - mkdir -p /nix
+  - mkdir -p /mnt/jenkins
+  # /etc/fstab へ LABEL 形式で追加
+  - echo "LABEL=nix-data /nix xfs defaults,nofail 0 2" >> /etc/fstab
+  - echo "LABEL=jenkins /mnt/jenkins xfs defaults,nofail 0 2" >> /etc/fstab
+  # fstab の設定に従って即座にマウントを実行
+  - mount -a
+  # sysctl の設定を反映
   - sysctl --system
