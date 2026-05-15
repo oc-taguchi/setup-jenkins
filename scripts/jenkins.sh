@@ -22,6 +22,9 @@ CADDY_BIN="$(command -v caddy)"
 # shellcheck disable=SC2016
 JENKINS_WAR="$(nix eval --raw "nixpkgs#jenkins" --apply 'p: "${p}/webapps/jenkins.war"' 2>/dev/null)"
 
+# Jenkins のホームディレクトリを環境変数に設定
+export JENKINS_HOME="${HOME}/.jenkins"
+
 # Caddy の設定ファイルのパス
 CADDY_CONF="${HOME}/.config/caddy/Caddyfile"
 
