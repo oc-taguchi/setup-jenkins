@@ -29,8 +29,8 @@ write_files:
     permissions: "0644"
 
 mounts:
-  - [/dev/nvme1n1p1, /nix, xfs, "defaults,nofail", "0", "2"]
-  - [/dev/nvme1n1p2, /mnt/jenkins, xfs, "defaults,nofail", "0", "2"]
+  - [LABEL=nix-data, /nix, xfs, "defaults,nofail", "0", "2"]
+  - [LABEL=jenkins, /mnt/jenkins, xfs, "defaults,nofail", "0", "2"]
 
 runcmd:
   - sysctl --system
