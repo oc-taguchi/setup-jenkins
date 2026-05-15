@@ -39,5 +39,7 @@ runcmd:
   - echo "LABEL=jenkins /mnt/jenkins xfs defaults,nofail 0 2" >> /etc/fstab
   # fstab の設定に従って即座にマウントを実行
   - mount -a
+  # jenkins データディレクトリの所有者を ec2-user に変更
+  - chown ec2-user:ec2-user /mnt/jenkins
   # sysctl の設定を反映
   - sysctl --system
