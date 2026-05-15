@@ -9,6 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # コンテナで動いているかどうか
 if [ -f /.dockerenv ] || grep -q 'docker\|container' /proc/1/cgroup 2>/dev/null; then
   log_step "Jenkins・Caddy を直接起動します"
+  log_info "このスクリプトはコンテナ内で実行されています"
 else
   log_error "このスクリプトはコンテナ内で実行する必要があります"
   exit 1
@@ -24,6 +25,7 @@ JENKINS_WAR="$(nix eval --raw "nixpkgs#jenkins" --apply 'p: "${p}/webapps/jenkin
 
 # Jenkins のホームディレクトリを環境変数に設定
 export JENKINS_HOME="${HOME}/.jenkins"
+log_debug "JENKINS_HOME: ${JENKINS_HOME}"
 
 # Caddy の設定ファイルのパス
 CADDY_CONF="${HOME}/.config/caddy/Caddyfile"
