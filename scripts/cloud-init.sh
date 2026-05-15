@@ -13,20 +13,23 @@ if [[ ! -f "${CLOUD_INIT_YAML}" ]]; then
   exit 1
 fi
 
+# cloud-init.yaml を配置
+sudo cp "${CLOUD_INIT_YAML}" /etc/cloud/cloud.cfg.d/99-custom.cfg
+
 log_step "cloud-init clean"
 sudo cloud-init clean
 
 log_step "cloud-init init"
 sudo cloud-init init
 
-log_step "cloud-init status"
-if ! sudo cloud-init status --long; then
-  log_error "cloud-init が失敗しました"
-  exit 1
-fi
-
 log_step "cloud-init modules --mode=config"
 sudo cloud-init modules --mode=config
 
 log_step "cloud-init modules --mode=final"
 sudo cloud-init modules --mode=final
+
+log_step "cloud-init status"
+if ! sudo cloud-init status --long; then
+  log_error "cloud-init が失敗しました"
+  exit 1
+fi
