@@ -11,7 +11,7 @@ in {
   home.homeDirectory = homeDir;
 
   home.file = {
-    ".config/nginx/nginx.conf".source = "${dotfilesDir}/.config/nginx/nginx.conf";
+    ".config/caddy/Caddyfile".source = "${dotfilesDir}/.config/caddy/Caddyfile";
   };
 
   home.packages = with pkgs; [
