@@ -3,7 +3,7 @@
 let
   dotfilesDir = ../dotfiles;
   homeDir = if user == "root" then "/root" else "/home/${user}";
-  jenkinsHome = "${homeDir}/.jenkins";
+  jenkinsHome = "/mnt/jenkins";
 in {
 
   home.username = user;
