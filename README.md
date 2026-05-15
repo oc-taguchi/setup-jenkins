@@ -13,14 +13,14 @@ Amazon Linux 2023 上に Nix + Home Manager を使って Jenkins 環境を構築
 ├── cloud-init.yaml         # EC2 デプロイ用 cloud-init 設定
 ├── nix/
 │   ├── flake.nix           # Nix Flake 定義（ec2-user / root）
-│   ├── dotfiles/           # 設定ファイル（nginx.conf 等）
+│   ├── dotfiles/           # 設定ファイル（Caddyfile 等）
 │   └── home-manager/
 │       └── main.nix        # Home Manager 設定
 └── scripts/
     ├── _functions          # 共通関数
     ├── install-nix.sh      # Nix インストールスクリプト
     ├── run-home-manager.sh # Home Manager 実行スクリプト
-    └── jenkins.sh          # Jenkins・nginx 起動スクリプト（コンテナ用）
+    └── jenkins.sh          # Jenkins・Caddy 起動スクリプト（コンテナ用）
 ```
 
 ## インストールされるパッケージ
@@ -31,7 +31,7 @@ Home Manager によって以下がインストールされます。
 |---|---|
 | Jenkins | CI サーバー |
 | Amazon Corretto 25 | Jenkins 実行用 JDK |
-| nginx | Jenkins へのリバースプロキシ |
+| Caddy | Jenkins へのリバースプロキシ |
 | git / git-lfs / gh | バージョン管理 |
 | curl / wget / jq | ユーティリティ |
 

@@ -50,8 +50,12 @@ log_step "==> home-manager の実行"
 if command -v home-manager &>/dev/null; then
   log_debug nix flake update --flake "${NIX_DIR}"
   nix flake update --flake "${NIX_DIR}"
+
   log_debug home-manager switch --flake "${NIX_DIR}#${USER}" "${args[@]}"
   home-manager switch --flake "${NIX_DIR}#${USER}" "${args[@]}"
+
+  log_step "古い世代をすべて削除してガベージコレクションを実行します..."
+  nix-collect-garbage -d
 else
   log_step "nix run home-manager switch を実行します..."
   nix run home-manager/master -- switch --flake "${NIX_DIR}#${USER}" -b backup

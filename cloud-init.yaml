@@ -4,15 +4,21 @@ timezone: Asia/Tokyo
 locale: ja_JP.utf8
 
 disk_setup:
-  /dev/xvdb:
+  /dev/nvme1n1:
     table_type: gpt
-    layout: true
+    layout: [20, 80] # 20% を /dev/nvme1n1p1 に、残りを /dev/nvme1n1p2 に割り当てる
     overwrite: false
 
 fs_setup:
+  # nix のパッケージ用
+  - label: nix-data
+    filesystem: xfs
+    device: /dev/nvme1n1p1
+    overwrite: false
+  # Jenkins 用
   - label: jenkins
     filesystem: xfs
-    device: /dev/xvdb1
+    device: /dev/nvme1n1p2
     overwrite: false
 
 write_files:
@@ -23,7 +29,8 @@ write_files:
     permissions: "0644"
 
 mounts:
-  - [/dev/xvdb1, /mnt/jenkins, xfs, "defaults,nofail", "0", "2"]
+  - [/dev/nvme1n1p1, /nix, xfs, "defaults,nofail", "0", "2"]
+  - [/dev/nvme1n1p2, /mnt/jenkins, xfs, "defaults,nofail", "0", "2"]
 
 runcmd:
   - sysctl --system
