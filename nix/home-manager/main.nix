@@ -60,8 +60,15 @@ in {
     Service = {
       # JENKINS_HOME を指定してデータの場所を固定
       Environment = "JENKINS_HOME=${jenkinsHome}";
+      # -Djdk.lang.Process.launchMechanism=FORK: posix_spawn が失敗する環境への対策
       # --webroot にバージョン番号を含めることで、バージョン更新時に古いキャッシュを参照しない
-      ExecStart = "${pkgs.corretto25}/bin/java -jar ${pkgs.jenkins}/webapps/jenkins.war --httpPort=8080 --webroot=${jenkinsHome}/war-${pkgs.jenkins.version}";
+      ExecStart = ''
+        ${pkgs.corretto25}/bin/java \
+          -Djdk.lang.Process.launchMechanism=FORK \
+          -jar ${pkgs.jenkins}/webapps/jenkins.war \
+          --httpPort=8080 \
+          --webroot=${jenkinsHome}/war-${pkgs.jenkins.version}
+      '';
       Restart = "always";
     };
     Install = {
