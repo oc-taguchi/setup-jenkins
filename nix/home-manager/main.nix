@@ -58,9 +58,10 @@ in {
       Description = "Jenkins CI Server";
     };
     Service = {
-      Environment = "JENKINS_HOME=${jenkinsHome}";
       # JENKINS_HOME を指定してデータの場所を固定
-      ExecStart = "${pkgs.corretto25}/bin/java -jar ${pkgs.jenkins}/webapps/jenkins.war --httpPort=8080";
+      Environment = "JENKINS_HOME=${jenkinsHome}";
+      # --webroot にバージョン番号を含めることで、バージョン更新時に古いキャッシュを参照しない
+      ExecStart = "${pkgs.corretto25}/bin/java -jar ${pkgs.jenkins}/webapps/jenkins.war --httpPort=8080 --webroot=${jenkinsHome}/war-${pkgs.jenkins.version}";
       Restart = "always";
     };
     Install = {
