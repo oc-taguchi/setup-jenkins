@@ -43,3 +43,5 @@ runcmd:
   - chown ec2-user:ec2-user /mnt/jenkins
   # sysctl の設定を反映
   - sysctl --system
+  # ec2-user の linger を有効化（ログインしていない状態でもユーザーサービスを実行可能にする）
+  - loginctl enable-linger "ec2-user"
